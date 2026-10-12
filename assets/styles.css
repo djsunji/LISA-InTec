@@ -382,3 +382,26 @@ p { margin: 0; }
   .t2, .t3, .t4, .t5 { grid-column: span 1; }
 }
 @media (max-width: 30rem) { .tile figcaption { font-size: 1rem; left: .75rem; } }
+
+/* Hero-Hintergrundfoto mit Verlauf */
+.hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; opacity: .55;
+  -webkit-mask-image: linear-gradient(100deg, transparent 15%, #000 65%); mask-image: linear-gradient(100deg, transparent 15%, #000 65%);
+  animation: kenburns 30s ease-in-out infinite alternate; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none;
+  background: linear-gradient(0deg, var(--hero-bg) 0%, transparent 35%), radial-gradient(120% 90% at 85% 40%, transparent 30%, var(--hero-bg) 85%); }
+@keyframes kenburns { from { transform: scale(1.04); } to { transform: scale(1.14) translateX(-2%); } }
+@media (max-width: 52rem) { .hero-photo { opacity: .35; -webkit-mask-image: linear-gradient(180deg, #000 20%, transparent 95%); mask-image: linear-gradient(180deg, #000 20%, transparent 95%); } }
+
+/* Fotos in Leistungskarten */
+.service .media { margin: -1.75rem -1.75rem .25rem; aspect-ratio: 16 / 9; max-width: none; overflow: hidden; background: var(--hero-bg); position: relative; }
+.service .media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.service .media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--surface) 70%, transparent)); }
+.service:hover .media img { transform: scale(1.06); }
+
+/* Abschnitte mit ausgeblendetem Hintergrundfoto */
+.has-bg { position: relative; isolation: isolate; overflow: hidden; }
+.section-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.section-bg img { width: 100%; height: 100%; object-fit: cover; opacity: .14; filter: grayscale(.3);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 35%, #000 65%, transparent); mask-image: linear-gradient(180deg, transparent, #000 35%, #000 65%, transparent); }
+:root[data-theme="dark"] .section-bg img { opacity: .2; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .section-bg img { opacity: .2; } }
