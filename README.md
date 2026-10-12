@@ -9,7 +9,7 @@ Statische Website (HTML, CSS, wenig JavaScript), läuft auf jedem Webhosting ohn
 - `robots.txt`, `sitemap.xml`
 
 ## Vor dem Livegang ergänzen
-1. **Logo:** Das Signet im Kopf ist ein Platzhalter (Faserquerschnitt). Das echte Logo als SVG/PNG in `assets/` legen und im `<a class="brand">` ersetzen.
+1. **Logo:** Eingebaut (`assets/logo.png`, helle Variante `assets/logo-hell.png` für dunkle Flächen). Falls eine SVG-Version existiert, wäre sie noch schärfer.
 2. **Impressum:** UID-Nummer (CHE-…) und vertretungsberechtigte Person(en) eintragen (Kommentar in `impressum.html`).
 3. **Datenschutz:** Namen des Hosting-Anbieters ergänzen; Text bei Bedarf rechtlich prüfen lassen.
 4. **Weiterleitungen** (301) von den alten Adressen, damit Google-Rankings erhalten bleiben:
@@ -26,4 +26,5 @@ Statische Website (HTML, CSS, wenig JavaScript), läuft auf jedem Webhosting ohn
 - Voll responsiv, schnell (keine Bibliotheken, keine Tracker, keine Cookies)
 - SEO: aussagekräftige Titel/Beschreibungen, strukturierte Daten (LocalBusiness mit Öffnungszeiten), Sitemap
 - Barrierefreiheit: semantisches HTML, Tastaturbedienung, Sprunglink, reduzierte Bewegung respektiert
+- Visuelle Highlights: animierte Fasern im Hero (reagieren auf die Maus), Spleiss-Animation, Messkurve, Laufband, Einblend-Effekte, Standortgrafik
 - Live-Anzeige «Jetzt erreichbar» nach Schweizer Zeit

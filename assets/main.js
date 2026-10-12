@@ -106,7 +106,7 @@
     ctx.fillStyle = "#c9d3db";
     ctx.fillRect(sp[0] - 34, sp[1] - 9, 68, 18);
     ctx.globalAlpha = 1;
-    ctx.fillStyle = "#0f171f";
+    ctx.fillStyle = "#061536";
     ctx.fillRect(sp[0] - 30, sp[1] - 1, 60, 2);
 
     // Lichtimpulse
@@ -135,6 +135,15 @@
 
   resize();
   window.addEventListener("resize", resize);
+  // Mausbewegung über dem Hero schickt zusätzliche Lichtimpulse los
+  var hero = canvas.parentElement, lastSpawn = 0;
+  hero.addEventListener("pointermove", function (e) {
+    if (reduce || e.timeStamp - lastSpawn < 120 || pulses.length > 24) return;
+    lastSpawn = e.timeStamp;
+    var r = hero.getBoundingClientRect();
+    var f = Math.max(0, Math.min(colors.length - 1, Math.round(((e.clientY - r.top) / r.height) * (colors.length - 1))));
+    pulses.push({ fiber: f, t: 0, v: 0.0006 + Math.random() * 0.0003 });
+  });
   if (!reduce) {
     // Startzustand: einige Impulse bereits unterwegs, damit das erste Bild nicht leer wirkt
     for (var k = 0; k < 6; k++) pulses.push({ fiber: (k * 5) % colors.length, t: k * 0.3, v: 0.0004 });
@@ -143,4 +152,52 @@
     });
     raf = requestAnimationFrame(tick);
   }
+})();
+
+(function () {
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Scroll-Fortschritt im Header
+  var bar = document.querySelector(".progress span");
+  if (bar) {
+    var upd = function () {
+      var h = document.documentElement.scrollHeight - innerHeight;
+      bar.style.setProperty("--p", h > 0 ? Math.min(1, scrollY / h).toFixed(4) : 0);
+    };
+    addEventListener("scroll", upd, { passive: true }); addEventListener("resize", upd); upd();
+  }
+
+  // Statusanzeige der Spleiss-Illustration im Takt der Animation (6 s)
+  var state = document.querySelector(".splice-state");
+  if (state && !reduce) {
+    var t0 = performance.now();
+    var labels = [[0.35, "Fasern ausrichten"], [0.56, "Lichtbogen"], [1, "Signal durchgängig"]];
+    (function loop(now) {
+      var p = ((now - t0) % 6000) / 6000, txt = labels[labels.length - 1][1];
+      for (var i = 0; i < labels.length; i++) { if (p < labels[i][0]) { txt = labels[i][1]; break; } }
+      if (state.textContent !== txt) state.textContent = txt;
+      requestAnimationFrame(loop);
+    })(t0);
+  }
+
+  // Einblenden: nur Elemente, die beim Laden unterhalb des Bildschirms liegen
+  if (reduce || !("IntersectionObserver" in window)) return;
+  var els = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      el.classList.remove("armed");
+      el.classList.add(el.classList.contains("trace") ? "drawn" : "shown");
+      io.unobserve(el);
+    });
+  }, { rootMargin: "0px 0px -10% 0px", threshold: 0.12 });
+  els.forEach(function (el) {
+    if (el.getBoundingClientRect().top > innerHeight) {
+      el.classList.add("armed");
+      if (el.classList.contains("trace")) { el.classList.remove("reveal"); }
+      io.observe(el);
+    }
+  });
 })();

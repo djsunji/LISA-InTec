@@ -1,18 +1,18 @@
 /* LISA inTec – Layout: dunkler Hero mit Faser-Animation, danach helle, ruhige Raster-Abschnitte.
    Signatur: der 12-Farben-Faserkode (IEC 60304) als Leitelement. */
 :root {
-  --bg: #f6f7f8;
+  --bg: #f5f7fb;
   --surface: #ffffff;
-  --ink: #121a22;
-  --muted: #4d5a66;
-  --line: #d9dee3;
+  --ink: #0c1530;
+  --muted: #4a5672;
+  --line: #d8dde9;
   --accent: #f2c200;          /* OS2-Kabelmantel-Gelb */
   --accent-ink: #121a22;      /* Text auf Gelb */
-  --link: #0a6b8f;
+  --link: #0030a0;             /* Logo-Dunkelblau */
   --apc: #1f8a4c;             /* SC/APC-Steckergrün */
-  --hero-bg: #0f171f;
+  --hero-bg: #061536;          /* Markenblau, abgedunkelt */
   --hero-ink: #eef2f5;
-  --hero-muted: #9fb0bf;
+  --hero-muted: #a5b6d6;
   --font-display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
@@ -23,16 +23,16 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0d1318; --surface: #141c23; --ink: #e8edf1; --muted: #9aa8b4; --line: #26323c;
-    --accent: #f5cb1f; --accent-ink: #121a22; --link: #5ec4e8; --apc: #45c07a;
-    --hero-bg: #080d12; --hero-ink: #eef2f5; --hero-muted: #9fb0bf;
+    --bg: #050d22; --surface: #0b1630; --ink: #e8eef9; --muted: #9cabc8; --line: #1d2b4a;
+    --accent: #f5cb1f; --accent-ink: #0c1530; --link: #4aa8f0; --apc: #45c07a;
+    --hero-bg: #030a1c; --hero-ink: #eef2fb; --hero-muted: #a5b6d6;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0d1318; --surface: #141c23; --ink: #e8edf1; --muted: #9aa8b4; --line: #26323c;
-  --accent: #f5cb1f; --accent-ink: #121a22; --link: #5ec4e8; --apc: #45c07a;
-  --hero-bg: #080d12; --hero-ink: #eef2f5; --hero-muted: #9fb0bf;
+  --bg: #050d22; --surface: #0b1630; --ink: #e8eef9; --muted: #9cabc8; --line: #1d2b4a;
+  --accent: #f5cb1f; --accent-ink: #0c1530; --link: #4aa8f0; --apc: #45c07a;
+  --hero-bg: #030a1c; --hero-ink: #eef2fb; --hero-muted: #a5b6d6;
   color-scheme: dark;
 }
 
@@ -74,7 +74,8 @@ p { margin: 0; }
 }
 .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 4.25rem; }
 .brand { display: inline-flex; align-items: center; gap: .65rem; color: inherit; text-decoration: none; }
-.brand svg { width: 2.1rem; height: 2.1rem; flex: none; }
+.brand-logo { height: 2.6rem; width: auto; display: block; }
+.site-footer .brand-logo { height: 3.2rem; }
 .brand-name { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em; line-height: 1; }
 .brand-name small { display: block; font-family: var(--font-mono); font-weight: 400; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--hero-muted); margin-top: .25rem; }
 .nav { display: flex; align-items: center; gap: .25rem; }
@@ -243,4 +244,117 @@ p { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { transition: none !important; animation: none !important; }
+}
+
+/* ---------- Visuelle Highlights ---------- */
+
+/* Scroll-Fortschritt als Lichtleiter im Header */
+.progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; pointer-events: none; }
+.progress span { display: block; height: 100%; width: 100%; transform-origin: 0 50%; transform: scaleX(var(--p, 0));
+  background: linear-gradient(90deg, #2560b8, #25b5b0, #f2c200); box-shadow: 0 0 8px #f2c200; }
+
+/* Laufband mit Fachbegriffen */
+.marquee { background: var(--hero-bg); color: var(--hero-ink); overflow: hidden; border-block: 1px solid rgba(255,255,255,.06); }
+.marquee-track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+.marquee span { font-family: var(--font-display); font-weight: 800; font-stretch: 85%; font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+  text-transform: uppercase; letter-spacing: .02em; padding: .85rem 1.25rem; white-space: nowrap; display: inline-flex; align-items: center; gap: 2.5rem; }
+.marquee span::after { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--accent); margin-left: 1.25rem; }
+.marquee span:nth-child(3n+2) { color: transparent; -webkit-text-stroke: 1px var(--hero-muted); }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* Leistungskarten: Hover mit Lichtimpuls am oberen Rand */
+.service { position: relative; overflow: hidden; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.service::before { content: ""; position: absolute; left: 0; top: 0; height: 3px; width: 40%;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent); transform: translateX(-120%); }
+.service:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -22px color-mix(in srgb, var(--ink) 55%, transparent); border-color: color-mix(in srgb, var(--ink) 25%, var(--line)); }
+.service:hover::before { animation: sweep 1.1s ease forwards; }
+.service:hover .service-icon { color: var(--link); }
+.service-icon { transition: color .25s ease, transform .25s ease; }
+.service:hover .service-icon { transform: scale(1.06); }
+@keyframes sweep { to { transform: translateX(320%); } }
+
+/* Spleissgerät-Illustration in der Glasfaser-Karte */
+.service.feature { grid-template-areas: "vis vis" "text ticks"; }
+.service.feature > div { grid-area: text; }
+.service.feature > .ticks { grid-area: ticks; }
+.splicer { grid-area: vis; margin: -1.75rem -1.75rem .5rem; background: #04102b; position: relative; overflow: hidden; }
+.splicer svg { display: block; width: 100%; height: clamp(150px, 22vw, 220px); overflow: visible; }
+.splicer .grid path { stroke: #112650; stroke-width: 1; fill: none; }
+.splicer .electrode path { fill: #6f7d88; }
+.splicer .fiber.left { animation: feedL 6s ease-in-out infinite; }
+.splicer .fiber.right { animation: feedR 6s ease-in-out infinite; }
+.splicer .arcflash { opacity: 0; transform-origin: 320px 100px; animation: arc 6s ease-out infinite; }
+.splicer .beam { opacity: 0; animation: beam 6s linear infinite; }
+.splicer figcaption { position: absolute; left: 1rem; bottom: .7rem; display: flex; align-items: center; gap: .5rem;
+  font-family: var(--font-mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; color: #9fb0bf; }
+.splicer .dot { width: .5rem; height: .5rem; border-radius: 50%; background: #f2c200; animation: blink 1s steps(2) infinite; }
+@keyframes feedL { 0%,10% { transform: translateX(-60px); } 35%,100% { transform: translateX(0); } }
+@keyframes feedR { 0%,10% { transform: translateX(60px); } 35%,100% { transform: translateX(0); } }
+@keyframes arc { 0%,38% { opacity: 0; transform: scale(.4); } 41% { opacity: 1; transform: scale(1.15); } 44% { opacity: .6; transform: scale(.9); } 47% { opacity: 1; transform: scale(1.05); } 55%,100% { opacity: 0; transform: scale(.6); } }
+@keyframes beam { 0%,58% { opacity: 0; transform: translateX(0); } 60% { opacity: 1; } 92% { opacity: 1; transform: translateX(1400px); } 93%,100% { opacity: 0; transform: translateX(1400px); } }
+@keyframes blink { 50% { opacity: .2; } }
+@media (max-width: 60rem) { .service.feature { grid-template-areas: "vis" "text" "ticks"; } }
+
+/* Ablauf: Lichtimpuls entlang der Linie */
+.steps::after { content: ""; position: absolute; top: calc(.6rem - 2px); left: 0; width: 6rem; height: 6px; border-radius: 3px;
+  background: radial-gradient(closest-side, #fff, #f2c200 40%, transparent); filter: blur(.5px); animation: travel 5s linear infinite; }
+@keyframes travel { from { transform: translateX(-6rem); } to { transform: translateX(calc(72rem - 2 * var(--gutter))); } }
+.steps li h3 { transition: color .2s; }
+.steps li:hover h3 { color: var(--link); }
+@media (max-width: 60rem) {
+  .steps::after { left: calc(.3rem - 2px); top: 0; width: 6px; height: 4rem; animation: travelY 4s linear infinite;
+    background: radial-gradient(closest-side, #fff, #f2c200 40%, transparent); }
+  @keyframes travelY { from { transform: translateY(-4rem); } to { transform: translateY(40rem); } }
+}
+.steps { overflow: hidden; padding-top: 2px; }
+
+/* Messkurve */
+.trace { margin: clamp(2.5rem, 6vw, 4rem) 0 0; background: var(--hero-bg); border-radius: var(--radius); padding: 1.25rem 1.25rem .75rem; color: var(--hero-ink); }
+.trace-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; margin-bottom: .5rem; }
+.trace .eyebrow { color: var(--hero-muted); }
+.trace-note { font-family: var(--font-mono); font-size: .72rem; color: var(--hero-muted); }
+.trace svg { display: block; width: 100%; height: clamp(150px, 26vw, 240px); overflow: visible; }
+.trace-grid path { stroke: #142a55; stroke-width: 1; fill: none; vector-effect: non-scaling-stroke; }
+.trace-line { fill: none; stroke: #f2c200; stroke-width: 2.5; vector-effect: non-scaling-stroke; stroke-linejoin: round;
+  filter: drop-shadow(0 0 4px rgba(242,194,0,.6)); stroke-dasharray: 1; stroke-dashoffset: 0; }
+.trace-events circle { fill: #061536; stroke: #25b5b0; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.trace-events text, .trace .axis { fill: #9fb0bf; font-family: var(--font-mono); font-size: 13px; }
+.trace.armed .trace-line { stroke-dashoffset: 1; }
+.trace.armed .trace-events { opacity: 0; }
+.trace.drawn .trace-line { transition: stroke-dashoffset 2.4s cubic-bezier(.4,0,.2,1); stroke-dashoffset: 0; }
+.trace.drawn .trace-events { opacity: 1; transition: opacity .6s 2s; }
+
+/* Standort-Grafik */
+.side-card { display: grid; align-content: start; }
+.locator { margin: -.5rem 0 1.25rem; border-bottom: 1px solid var(--line); padding-bottom: 1rem; }
+.locator svg { display: block; width: 100%; height: auto; }
+.locator .contours path { stroke: var(--line); stroke-width: 1.5; }
+.locator .pin { fill: var(--accent); stroke: var(--ink); stroke-width: 2; }
+.locator .ping { fill: none; stroke: var(--accent); stroke-width: 2; transform-origin: 150px 88px; animation: ping 2.4s ease-out infinite; }
+.locator .ping.p2 { animation-delay: 1.2s; }
+.locator .pin-label { fill: var(--ink); font-family: var(--font-display); font-weight: 800; font-size: 15px; }
+.locator .pin-sub { fill: var(--muted); font-family: var(--font-body); font-size: 12px; }
+@keyframes ping { from { transform: scale(1); opacity: 1; } to { transform: scale(4.5); opacity: 0; } }
+
+/* Einblenden beim Scrollen (nur für Elemente unterhalb des ersten Bildschirms) */
+.reveal.armed { opacity: 0; transform: translateY(24px); }
+.reveal.shown { opacity: 1; transform: none; transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+.reveal.shown > * { animation: rise .6s both; }
+.reveal.shown > *:nth-child(2) { animation-delay: .08s; } .reveal.shown > *:nth-child(3) { animation-delay: .16s; }
+.reveal.shown > *:nth-child(4) { animation-delay: .24s; } .reveal.shown > *:nth-child(5) { animation-delay: .32s; }
+.reveal.shown > *:nth-child(6) { animation-delay: .4s; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* Hero: Text-Einstieg */
+.hero-copy > * { animation: rise .8s both; }
+.hero-copy > *:nth-child(2) { animation-delay: .1s; } .hero-copy > *:nth-child(3) { animation-delay: .2s; } .hero-copy > *:nth-child(4) { animation-delay: .3s; }
+.hero h1 em { background: linear-gradient(90deg, var(--accent), #fff3b0, var(--accent)); background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 6s ease-in-out infinite; }
+@keyframes shimmer { 0%,100% { background-position: 0 0; } 50% { background-position: 100% 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal.armed { opacity: 1; transform: none; }
+  .trace.armed .trace-line { stroke-dashoffset: 0; } .trace.armed .trace-events { opacity: 1; }
+  .marquee-track { transform: none; }
 }
