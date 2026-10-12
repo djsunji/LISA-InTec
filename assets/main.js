@@ -55,7 +55,7 @@
   var canvas = document.getElementById("fibers");
   if (!canvas || !canvas.getContext) return;
   var ctx = canvas.getContext("2d");
-  var colors = ["#d7262e", "#2a9a45", "#2560b8", "#f2c200", "#f4f4f4", "#8c959c", "#8a5a2b", "#7b3fa6", "#25b5b0", "#3a3f44", "#ef7d1a", "#ef8fb4"];
+  var colors = ["#d7262e", "#2a9a45", "#2560b8", "#f2c200", "#c7ccd3", "#8c959c", "#8a5a2b", "#7b3fa6", "#25b5b0", "#3a3f44", "#ef7d1a", "#ef8fb4"];
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var W = 0, H = 0, dpr = 1, pulses = [], raf = 0;
 
@@ -96,8 +96,8 @@
         if (s === 0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]);
       }
       ctx.strokeStyle = colors[i];
-      ctx.globalAlpha = 0.55;
-      ctx.lineWidth = 1.6;
+      ctx.globalAlpha = 0.8;
+      ctx.lineWidth = 1.8;
       ctx.stroke();
     }
     // Spleissschutz
@@ -106,7 +106,7 @@
     ctx.fillStyle = "#c9d3db";
     ctx.fillRect(sp[0] - 34, sp[1] - 9, 68, 18);
     ctx.globalAlpha = 1;
-    ctx.fillStyle = "#061536";
+    ctx.fillStyle = "#8892a0";
     ctx.fillRect(sp[0] - 30, sp[1] - 1, 60, 2);
 
     // Lichtimpulse
@@ -114,7 +114,7 @@
       var pl = pulses[j];
       var q = point(pl.fiber, pl.t);
       var g = ctx.createRadialGradient(q[0], q[1], 0, q[0], q[1], 14);
-      g.addColorStop(0, "rgba(255,255,255,0.95)");
+      g.addColorStop(0, "rgba(255,255,255,1)");
       g.addColorStop(0.3, colors[pl.fiber]);
       g.addColorStop(1, "rgba(0,0,0,0)");
       ctx.globalAlpha = Math.min(1, (2 - pl.t) * 2);
