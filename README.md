@@ -17,7 +17,7 @@ Statische Website (HTML, CSS, wenig JavaScript), läuft auf jedem Webhosting ohn
    - `/kontakt` → `/#kontakt`
    - `/Impressum` → `/impressum.html`
    - `/datenschutzerklaerung` → `/datenschutz.html`
-5. **Fotos (optional):** Eigene Baustellen-/Spleissfotos würden die Seite weiter aufwerten.
+5. **Fotos:** Symbolbilder von Unsplash (Unsplash-Lizenz, kommerziell frei nutzbar, keine Namensnennung nötig) werden direkt von images.unsplash.com geladen. Eigene Baustellenfotos können sie jederzeit ersetzen: einfach die `src`/`srcset` im Abschnitt «Einblicke» austauschen. Wer die Bilder lieber selbst hosten will (ohne Datenübertragung an Unsplash), lädt sie herunter, legt sie in `assets/` und passt die Datenschutzerklärung an.
 6. Google Search Console: `sitemap.xml` einreichen; Google-Unternehmensprofil mit gleicher Adresse/Telefonnummer pflegen.
 
 ## Was verbessert wurde

@@ -358,3 +358,50 @@ p { margin: 0; }
   .trace.armed .trace-line { stroke-dashoffset: 0; } .trace.armed .trace-events { opacity: 1; }
   .marquee-track { transform: none; }
 }
+
+/* ---------- Fotos ---------- */
+.mosaic { display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: clamp(9rem, 16vw, 13rem); gap: .75rem; }
+.tile { margin: 0; position: relative; overflow: hidden; border-radius: var(--radius); background: var(--hero-bg); min-width: 0; }
+.tile img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .6s; filter: saturate(.9); }
+.tile:hover img { transform: scale(1.06); filter: saturate(1.1); }
+.tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(3,10,28,.85)); pointer-events: none; }
+.tile figcaption { position: absolute; left: 1rem; bottom: .85rem; z-index: 1; color: #fff; font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; display: flex; align-items: baseline; gap: .6rem; }
+.tile .tag { color: var(--accent); }
+.t1 { grid-column: span 3; grid-row: span 2; }
+.t2 { grid-column: span 3; }
+.t3 { grid-column: span 3; }
+.t4 { grid-column: span 3; }
+.t5 { grid-column: span 3; }
+.credit { margin-top: 1rem; font-size: .85rem; color: var(--muted); }
+.about-photo { margin: 1.75rem 0 0; border-radius: var(--radius); overflow: hidden; aspect-ratio: 16 / 9; max-width: 100%; background: rgba(255,255,255,.05); position: relative; }
+.about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.about-photo::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); background: linear-gradient(0deg, rgba(6,21,54,.35), transparent 60%); }
+@media (max-width: 52rem) {
+  .mosaic { grid-template-columns: 1fr 1fr; grid-auto-rows: 10rem; }
+  .t1 { grid-column: span 2; grid-row: span 2; }
+  .t2, .t3, .t4, .t5 { grid-column: span 1; }
+}
+@media (max-width: 30rem) { .tile figcaption { font-size: 1rem; left: .75rem; } }
+
+/* Hero-Hintergrundfoto mit Verlauf */
+.hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -3; opacity: .55;
+  -webkit-mask-image: linear-gradient(100deg, transparent 15%, #000 65%); mask-image: linear-gradient(100deg, transparent 15%, #000 65%);
+  animation: kenburns 30s ease-in-out infinite alternate; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none;
+  background: linear-gradient(0deg, var(--hero-bg) 0%, transparent 35%), radial-gradient(120% 90% at 85% 40%, transparent 30%, var(--hero-bg) 85%); }
+@keyframes kenburns { from { transform: scale(1.04); } to { transform: scale(1.14) translateX(-2%); } }
+@media (max-width: 52rem) { .hero-photo { opacity: .35; -webkit-mask-image: linear-gradient(180deg, #000 20%, transparent 95%); mask-image: linear-gradient(180deg, #000 20%, transparent 95%); } }
+
+/* Fotos in Leistungskarten */
+.service .media { margin: -1.75rem -1.75rem .25rem; aspect-ratio: 16 / 9; max-width: none; overflow: hidden; background: var(--hero-bg); position: relative; }
+.service .media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.service .media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--surface) 70%, transparent)); }
+.service:hover .media img { transform: scale(1.06); }
+
+/* Abschnitte mit ausgeblendetem Hintergrundfoto */
+.has-bg { position: relative; isolation: isolate; overflow: hidden; }
+.section-bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.section-bg img { width: 100%; height: 100%; object-fit: cover; opacity: .14; filter: grayscale(.3);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 35%, #000 65%, transparent); mask-image: linear-gradient(180deg, transparent, #000 35%, #000 65%, transparent); }
+:root[data-theme="dark"] .section-bg img { opacity: .2; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .section-bg img { opacity: .2; } }
