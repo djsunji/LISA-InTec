@@ -21,7 +21,7 @@ Statische Website (HTML, CSS, wenig JavaScript), läuft auf jedem Webhosting ohn
 6. Google Search Console: `sitemap.xml` einreichen; Google-Unternehmensprofil mit gleicher Adresse/Telefonnummer pflegen.
 
 ## Was verbessert wurde
-- Moderne, eigenständige Gestaltung mit Glasfaser-Farbkode als Leitmotiv, Hell- und Dunkelmodus
+- Moderne, eigenständige Gestaltung mit Glasfaser-Farbkode als Leitmotiv, heller Look mit weissem Hintergrund
 - Alles Wichtige auf einer Seite: weniger Klicks, klare Handlungsaufrufe (Anrufen, Anfragen)
 - Voll responsiv, schnell (keine Bibliotheken, keine Tracker, keine Cookies)
 - SEO: aussagekräftige Titel/Beschreibungen, strukturierte Daten (LocalBusiness mit Öffnungszeiten), Sitemap
